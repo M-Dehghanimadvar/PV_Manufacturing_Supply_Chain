@@ -1,2 +1,2 @@
-# PV_Manufacturing_Supply_Chain
+# PV Manufacturing Supply Chain
 Dehghani et al
