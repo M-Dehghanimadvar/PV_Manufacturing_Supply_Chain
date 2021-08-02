@@ -50,53 +50,22 @@ variable_cost = (Transportation_In + Production_cost +
                  Purchasing_BoMs + national_transportation_out_solar_module + Trade_Cost_BoM) \
                 - value(model.module_incentives)
 
-Selling_price = 0.308
-R_and_D_SGA = (Selling_price - Purchasing_solar_cell) * 0.105
-Final_cost = variable_cost + R_and_D_SGA + Depreciation_cost + maintenance
-Income = (Selling_price - Final_cost)
-Profit_margin = (Income / Selling_price) * 100
-Tax = 0.3 * Income
-Cash_flow = variable_cost + R_and_D_SGA + maintenance + Tax
+for Selling_price in np.arange(0.20, 0.40, 0.00005):
+    R_and_D_SGA = (Selling_price - Purchasing_solar_cell) * 0.105
+    Final_cost = variable_cost + R_and_D_SGA + Depreciation_cost + maintenance
+    Income = (Selling_price - Final_cost)
+    Profit_margin = (Income / Selling_price) * 100
+    Tax = 0.3 * Income
+    Cash_flow = variable_cost + R_and_D_SGA + maintenance + Tax
+    IRR = irr([-(CapEx + Working_Capital),
+               (Selling_price - Cash_flow), (Selling_price - Cash_flow),
+               (Selling_price - Cash_flow),
+               (Selling_price - Cash_flow), (Selling_price - Cash_flow),
+               (Selling_price - Cash_flow),
+               (Selling_price - (Cash_flow - Working_Capital))])
+    if 0.138 <= IRR <= 0.145:
+        break
+    else:
+        continue
 
-IRR = irr([-(CapEx + Working_Capital),
-           (Selling_price - Cash_flow), (Selling_price - Cash_flow),
-           (Selling_price - Cash_flow),
-           (Selling_price - Cash_flow), (Selling_price - Cash_flow),
-           (Selling_price - Cash_flow),
-           (Selling_price - (Cash_flow - Working_Capital))])
-
-# print((Production_cost)*1600000000)
-#
-# print(Selling_price*1600000000)
-# print(Initial_Investment*1600000000)
-# print(CapEx*1600000000)
-# print(Working_Capital*1600000000)
-# print(Depreciation_cost*1600000000)
-# print(Purchasing_BoMs*1600000000)
-# print((national_transportation_out_solar_module+ National_Transportation_in_BoMs)*1600000000)
-# print(International_Transportation_in_BoMs*1600000000)
-# print(R_and_D_SGA*1600000000)
-# print(Trade_Cost_BoM*1600000000)
-# print((Transportation_In+national_transportation_out_solar_module)*1600000000)
-print(Income*1600000000)
-# print(Profit_margin)
-# print(Purchasing_solar_glass*1600000000)
-# print((International_Transportation_In_solar_glass+National_Transportation_In_solar_glass)*1600000000)
-# print(maintenance*1600000000)
-# print(Depreciation_cost)
-
-# print(maintenance)
-# print(R_and_D_SGA)
-# print(Trade_Cost_BoM)
-# print(Tax)
-print(IRR*100)
-# print(Trade_Cost_BoM)
-
-# print(International_Transportation_in_BoMs)
-# print(Production_cost)
-# print(National_Transportation_in_BoMs+national_transportation_input_solar_module)
-# print(Final_cost)
-
-# print(Production_cost)
-# print((national_transportation_out_solar_module + National_Transportation_in_BoMs+International_Transportation_in_BoMs))
-# print(International_Transportation_In_solar_module + national_transportation_input_solar_module)
+        
