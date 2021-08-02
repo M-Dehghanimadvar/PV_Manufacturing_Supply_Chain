@@ -1,5 +1,4 @@
 from Sets_Parameters import *
-# from Sensitivity import *
 from Solve import *
 
 National_Demand = value(sum(model.national_demand[national_market, month] for national_market in
