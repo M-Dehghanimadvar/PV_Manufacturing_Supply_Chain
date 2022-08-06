@@ -76,6 +76,8 @@ def Param_Suppliers(model, column_info, column_product, *Sets):
     Match_sum = np.sum(result, axis=1) == len(Sets)
     if np.sum(Match_sum) == 1:
         Match_index = Match_sum.idxmax()
+        if column_info == "Capacity":
+            return product_suppliers.iloc[Match_index][column_info] * 1.00005
         if column_info == "Price":
             if np.isnan(product_suppliers.iloc[Match_index][column_info]):
                 raw_price = round(np.random.uniform(product_suppliers.iloc[Match_index][column_info + "RangeL"],
