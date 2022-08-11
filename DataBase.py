@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore")
 
 dataBase = pd.ExcelFile("Dataset.xlsx")
 suppliers = pd.read_excel(dataBase, sheet_name="Suppliers")
@@ -76,8 +78,6 @@ def Param_Suppliers(model, column_info, column_product, *Sets):
     Match_sum = np.sum(result, axis=1) == len(Sets)
     if np.sum(Match_sum) == 1:
         Match_index = Match_sum.idxmax()
-        if column_info == "Capacity":
-            return product_suppliers.iloc[Match_index][column_info] * 1.00005
         if column_info == "Price":
             if np.isnan(product_suppliers.iloc[Match_index][column_info]):
                 raw_price = round(np.random.uniform(product_suppliers.iloc[Match_index][column_info + "RangeL"],
@@ -128,6 +128,8 @@ def Param_Potential_Manufacturer(model, info, *Sets):
     if np.sum(Match_sum) == 1:  # if exists!
         Match_index = Match_sum.idxmax()  # find the row index, we use np.sum so return would be the row with one
         # True bool. If we have two row with True so the data is duplicated and should be omitted.
+        if info == "Capacity":
+            return candidate_location.iloc[Match_index][info] * 1.000005
         if info == "LabourCost":
             return Compute_LabourCost(candidate_location.iloc[Match_index])
         if info == "ElectricityCost":

@@ -206,6 +206,7 @@ model.production_capacity = Param(model.potential_manufacturer,
                                   initialize=lambda model, potential_manufacturer:
                                   Param_Potential_Manufacturer(model, "Capacity", potential_manufacturer))
 
+model.production_capacity.display()
 
 # Demand
 
